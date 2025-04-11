@@ -3,7 +3,7 @@ import axios from "axios";
 import SearchFilters from "../Components/SearchFilters";
 import CarCard from "../Components/CarCard";
 
-function Home() {
+function Home({ onAddToWishlist }) {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -23,7 +23,8 @@ function Home() {
     setLoading(true);
     setError("");
     try {
-      const baseUrl = "https://67f8e902094de2fe6e9fb486.mockapi.io/api/v1/cars";
+      const baseUrl = `${String(import.meta.env.VITE_API_BASE_URL)}/cars`;
+      console.log(baseUrl);
       const response = await axios.get(baseUrl);
       let results = response.data;
 
@@ -126,7 +127,7 @@ function Home() {
                 <CarCard
                   key={car.id}
                   car={car}
-                  onAddToWishlist={handleAddToWishlist}
+                  onAddToWishlist={onAddToWishlist}
                 />
               ))
             ) : (
@@ -134,7 +135,6 @@ function Home() {
             )}
           </div>
 
-          {/* Pagination */}
           <div className="flex justify-center mt-6 gap-2">
             {Array.from({ length: totalPages }, (_, index) => (
               <button

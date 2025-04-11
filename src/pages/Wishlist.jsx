@@ -20,14 +20,30 @@ function Wishlist() {
       {wishlist.length === 0 ? (
         <p className="text-gray-600">No cars in your wishlist.</p>
       ) : (
-        <div className="flex flex-wrap gap-4">
+        <div className="flex gap-4">
           {wishlist.map((car) => (
-            <CarCard
+            <div
               key={car.id}
-              car={car}
-              isInWishlist={true}
-              onAddToWishlist={() => removeFromWishlist(car.id)}
-            />
+              className="rounded shadow-md border border-gray-200 p-4 w-full sm:w-[30%] bg-white dark:bg-gray-800 dark:border-gray-700"
+            >
+              <img
+                src={car.image}
+                alt={car.model}
+                className="w-full h-40 object-cover rounded mb-2"
+              />
+              <h2 className="text-lg font-bold dark:text-gray-300">
+                {car.brand} {car.model}
+              </h2>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                ${car.price} | {car.fuelType} | {car.seatingCapacity} Seats
+              </p>
+              <button
+                onClick={() => removeFromWishlist(car.id)}
+                className="mt-2 text-sm text-red-600 hover:underline"
+              >
+                Remove
+              </button>
+            </div>
           ))}
         </div>
       )}

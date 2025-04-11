@@ -17,7 +17,7 @@ function CarPage() {
       setLoading(true);
       try {
         const response = await axios.get(
-          `https://67f8e902094de2fe6e9fb486.mockapi.io/api/v1/cars/${id}`
+          `${String(import.meta.env.VITE_API_BASE_URL)}/cars/${id}`
         );
         setCar(response.data);
         setError("");
