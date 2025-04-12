@@ -11,13 +11,6 @@ function Home({ onAddToWishlist }) {
   const [total, setTotal] = useState(0);
   const [filters, setFilters] = useState({});
   const [sortOption, setSortOption] = useState("");
-  const [wishlist, setWishlist] = useState(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("wishlist");
-      return saved ? JSON.parse(saved) : [];
-    }
-    return [];
-  });
 
   const fetchCars = async (filters = {}, page = 1) => {
     setLoading(true);
@@ -74,21 +67,10 @@ function Home({ onAddToWishlist }) {
     fetchCars(filters, page);
   }, [page, filters]);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("wishlist", JSON.stringify(wishlist));
-    }
-  }, [wishlist]);
-
   const handleSearch = (searchFilters) => {
     setFilters(searchFilters);
     setPage(1);
-  };
-
-  const handleAddToWishlist = (car) => {
-    if (!wishlist.some((item) => item.id === car.id)) {
-      setWishlist((prev) => [...prev, car]);
-    }
+    fetchCars(searchFilters, 1);
   };
 
   const totalPages = Math.ceil(total / 10);

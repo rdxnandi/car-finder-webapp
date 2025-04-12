@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { MdLightMode, MdDarkMode } from "react-icons/md";
 import { Link } from "react-router-dom";
+import Wishlist from "../pages/Wishlist";
 
-function Header({ wishlist }) {
+function Header({ wishlist, setWishlist }) {
   const [darkMode, setDarkMode] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
 
@@ -23,6 +24,12 @@ function Header({ wishlist }) {
     setIsWishlistOpen(!isWishlistOpen);
   };
 
+  const removeFromWishlist = (carId) => {
+    const updatedWishlist = wishlist.filter((car) => car.id !== carId);
+    setWishlist(updatedWishlist);
+    localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+  };
+
   return (
     <>
       <header className="flex justify-between items-center py-4 px-6 bg-white shadow-md dark:bg-gray-900">
@@ -34,7 +41,7 @@ function Header({ wishlist }) {
         <div className="flex gap-7">
           <button
             onClick={toggleWishlist}
-            className="text-white cursor-pointer"
+            className="dark:text-white cursor-pointer"
           >
             Wishlist
           </button>
@@ -68,18 +75,11 @@ function Header({ wishlist }) {
           <ul className="mt-4">
             {wishlist.length > 0 ? (
               wishlist.map((car) => (
-                <li
+                <Wishlist
                   key={car.id}
-                  className="text-gray-700 dark:text-gray-300 mb-2"
-                >
-                  <p className="font-bold">
-                    {car.brand} {car.model}
-                  </p>
-                  <p>${car.price}</p>
-                  <p>
-                    {car.fuelType} | {car.seatingCapacity} Seats
-                  </p>
-                </li>
+                  car={car}
+                  onRemove={removeFromWishlist}
+                />
               ))
             ) : (
               <p className="text-gray-500 dark:text-gray-400">

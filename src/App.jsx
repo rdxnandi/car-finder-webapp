@@ -5,7 +5,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./Components/Header";
 
 function App() {
-  const [wishlist, setWishlist] = useState([]);
+  const [wishlist, setWishlist] = useState(() => {
+    const saved = localStorage.getItem("wishlist");
+    return saved ? JSON.parse(saved) : [];
+  });
 
   const handleAddToWishlist = (car) => {
     if (!wishlist.some((item) => item.id === car.id)) {
@@ -14,7 +17,7 @@ function App() {
   };
   return (
     <BrowserRouter>
-      <Header wishlist={wishlist} />
+      <Header wishlist={wishlist} setWishlist={setWishlist} />
       <Routes>
         <Route
           path="/"

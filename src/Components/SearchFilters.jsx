@@ -32,7 +32,11 @@ const SearchFilters = ({ onSearch }) => {
           <option value="">Brand</option>
           <option>Toyota</option>
           <option>Honda</option>
-          <option>Tesla</option>
+          <option>Ford</option>
+          <option>Audi</option>
+          <option>Hyundai</option>
+          <option>Opel</option>
+          <option>Tata Motors</option>
         </select>
 
         <select
